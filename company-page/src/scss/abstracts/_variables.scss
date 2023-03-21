@@ -1,0 +1,63 @@
+$mainColor: #192430;
+
+$mainBg: #303a45;
+$mainBg-Light: #f4f6f9;
+
+$txtColor: #e6e9ec;
+$txtColor-Light: #000;
+
+$white: #fff;
+$dangerColor: #ef5350;
+$dangerColorHover: #cb4744;
+$oceanColor: #398bf7;
+
+$overlay: #262e37;
+
+$mobile-width: 600px;
+$tablet-width: 990px;
+$minScreen: 1250px;
+
+$fontSizeNormal: 1rem;
+$fontSizeMedium: 1.25rem;
+$fontSizeLarge: 1.5625rem;
+
+$fontFamily: 'Montserrat', sans-serif;
+
+$topNavHeight: 3.5rem;
+$sidebarWidth: 15rem;
+$sidebarHideWidth: 4.5rem;
+$spacing: 2rem;
+
+// Color theme
+$themeWhite: #fff;
+$themeBlack: #192430;
+$themePurple: #745af2;
+$themeGreen: #06d79c;
+$themeRed: #ef5350;
+$themeBlue: #398bf7;
+$themeYellow: #ffb22b;
+
+$themeWhiteGradient: linear-gradient(45deg, rgb(255, 255, 255), rgb(204, 201, 201));
+$themeBlackGradient: linear-gradient(45deg, rgb(0, 0, 0), rgb(63, 61, 61));
+$themePurpleGradient: linear-gradient(45deg, rgb(181, 24, 253), rgb(236, 143, 240));
+$themeGreenGradient: linear-gradient(45deg, rgb(16, 241, 193), rgb(96, 230, 178));
+$themeRedGradient: linear-gradient(45deg, rgb(252, 53, 53), rgb(223, 121, 121));
+$themeBlueGradient: linear-gradient(45deg, rgb(62, 44, 156), rgb(33, 125, 179));
+
+
+$themeBlackHover: #242a33;
+$themePurpleHover: #634dce;
+$themeGreenHover: #05b785;
+$themeRedHover: #cb4744;
+$themeBlueHover: #3076d2;
+$themeYellowHover: #d99725;
+
+// Authorization css value
+// $loginPageBg: #e2e2e5;
+// $loginFormBg: #474a59;
+
+$loginPageBg: #3b7cdd;
+
+$loginFormMaxHeight: 750px;
+$registerFormMaxHeight: 850px;
+$loginFormMaxWidth: 1400px;
