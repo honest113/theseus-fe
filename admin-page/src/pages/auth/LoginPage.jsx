@@ -1,26 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import "./scss/login.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { loadUser, login } from "../../redux/slices/auth/AuthSlice";
-import { CssVarsProvider } from "@mui/joy/styles";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import {
+  Box,
+  CircularProgress,
+  InputLabel,
+  OutlinedInput,
+  FormControl,
+  InputAdornment,
+  IconButton,
+  Checkbox,
+  FormControlLabel,
+  Button
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isLoading = useSelector((state) => state.auth.isLoading);
 
-  const handleLogin = () => {
-    dispatch(login());
-  }
+  // Email and password state
+  const [value, setValue] = useState({
+    email: "",
+    password: "",
+    showPassword: false
+  });
+
+  // Handle show password
+  const handleChangeValue = (prop) => (event) => {
+    setValue({ ...value, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValue({
+      ...value,
+      showPassword: !value.showPassword
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleSubmitForm = async (event) => {
+    event.preventDefault();
+
+    const user = {
+      email: value.email,
+      password: value.password
+    };
+
+    try {
+      dispatch(login());
+      // const loginData = await login(user);
+      // if (!loginData) {
+      //   // handleOpenErrModal();
+      //   console.log("login failure");
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(loadUser());
@@ -37,53 +81,111 @@ const LoginPage = () => {
     return <Navigate to="/" />;
   } else {
     return (
-      <CssVarsProvider>
-        <main>
-          <Sheet
-            sx={{
-              width: 300,
-              mx: "auto",
-              my: 4,
-              py: 3,
-              px: 2,
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              borderRadius: "sm",
-              boxShadow: "md"
-            }}
-            variant="outlined"
-          >
-            <div>
-              <Typography level="h4" component="h1">
-                <b>Welcome!</b>
-              </Typography>
-              <Typography level="body2">Sign in to continue.</Typography>
+      <div className="auth">
+        <div className="auth__wrapper">
+          <div className="auth__content">
+            <div className="auth__content__top">
+              <div className="auth__content__top__title">Log In</div>
+              <div className="auth__content__top__sub">
+                Welcome Back! Please sign in to your Account
+              </div>
             </div>
-            <FormControl>
-              <FormLabel>Email</FormLabel>
-              <Input
-                name="email"
-                type="email"
-                placeholder="johndoe@email.com"
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Password</FormLabel>
-              <Input name="password" type="password" placeholder="password" />
-            </FormControl>
+            <form onSubmit={handleSubmitForm} className="auth__content__form">
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <OutlinedInput
+                  id="email"
+                  type="email"
+                  label="Email"
+                  placeholder="Your email here..."
+                  value={value.email}
+                  onChange={handleChangeValue("email")}
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  id="password"
+                  type={value.showPassword ? "text" : "password"}
+                  value={value.password}
+                  onChange={handleChangeValue("password")}
+                  label="Password"
+                  placeholder="Your password here..."
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {value.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
 
-            <Button sx={{ mt: 1 }} onClick={handleLogin}>Log in</Button>
-            <Typography
-              endDecorator={<Link href="/auth/register">Sign up</Link>}
-              fontSize="sm"
-              sx={{ alignSelf: "center" }}
-            >
-              Don&apos;t have an account?
-            </Typography>
-          </Sheet>
-        </main>
-      </CssVarsProvider>
+              <div className="auth__content__form__action">
+                <div className="auth__content__form__action__remember">
+                  <FormControlLabel
+                    label="Remember Me"
+                    control={
+                      <Checkbox
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d81b60"
+                          }
+                        }}
+                      />
+                    }
+                  />
+                </div>
+                <Link
+                  to="/auth/reset-password"
+                  className="auth__content__form__action__forgot"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+              <Button variant="contained" size="large" type="submit">
+                Login
+              </Button>
+            </form>
+            <div className="or">
+              <span>OR</span>
+            </div>
+            <div className="auth__content__bottom">
+              <div className="auth__content__bottom__social-btns">
+                <button className="facebook">
+                  <i className="bx bxl-facebook"></i>
+                </button>
+                <button className="twitter">
+                  <i className="bx bxl-twitter"></i>
+                </button>
+                <button className="linkedin">
+                  <i className="bx bxl-linkedin"></i>
+                </button>
+              </div>
+              <div className="auth__content__bottom__register">
+                <div className="login__content__bottom__register__text">
+                  Don't have an account?
+                </div>
+                <Link
+                  to="/auth/register"
+                  className="auth__content__bottom__register__link"
+                >
+                  Create free account
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="auth__background-img"></div>
+        </div>
+      </div>
     );
   }
 };
