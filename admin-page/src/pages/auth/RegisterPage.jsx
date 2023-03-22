@@ -176,17 +176,7 @@ const Register = () => {
               <span>OR</span>
             </div>
             <div className="auth__content__bottom">
-              <div className="auth__content__bottom__social-btns">
-                <button className="facebook">
-                  <i class="bx bxl-facebook"></i>
-                </button>
-                <button className="twitter">
-                  <i class="bx bxl-twitter"></i>
-                </button>
-                <button className="linkedin">
-                  <i class="bx bxl-linkedin"></i>
-                </button>
-              </div>
+              
               <div className="auth__content__bottom__register">
                 <div className="login__content__bottom__register__text">
                   Already have an account?

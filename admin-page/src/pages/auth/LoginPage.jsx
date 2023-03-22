@@ -17,15 +17,16 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { loginByAdmin } from "../../apis/auth/authApi";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isLoading = useSelector((state) => state.auth.isLoading);
 
-  // Email and password state
+  // Username and password state
   const [value, setValue] = useState({
-    email: "",
+    username: "",
     password: "",
     showPassword: false
   });
@@ -50,19 +51,15 @@ const LoginPage = () => {
     event.preventDefault();
 
     const user = {
-      email: value.email,
+      userName: value.username,
       password: value.password
     };
 
     try {
-      dispatch(login());
-      // const loginData = await login(user);
-      // if (!loginData) {
-      //   // handleOpenErrModal();
-      //   console.log("login failure");
-      // }
+      const res = await loginByAdmin(user);
+      dispatch(login(res.data));
     } catch (error) {
-      console.log(error);
+      alert("Incorrect username or password!")
     }
   };
 
@@ -92,14 +89,14 @@ const LoginPage = () => {
             </div>
             <form onSubmit={handleSubmitForm} className="auth__content__form">
               <FormControl fullWidth sx={{ m: 1 }}>
-                <InputLabel htmlFor="email">Email</InputLabel>
+                <InputLabel htmlFor="username">Username</InputLabel>
                 <OutlinedInput
-                  id="email"
-                  type="email"
-                  label="Email"
-                  placeholder="Your email here..."
-                  value={value.email}
-                  onChange={handleChangeValue("email")}
+                  id="username"
+                  type="text"
+                  label="Username"
+                  placeholder="Your username here..."
+                  value={value.username}
+                  onChange={handleChangeValue("username")}
                 />
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
@@ -159,17 +156,6 @@ const LoginPage = () => {
               <span>OR</span>
             </div>
             <div className="auth__content__bottom">
-              <div className="auth__content__bottom__social-btns">
-                <button className="facebook">
-                  <i className="bx bxl-facebook"></i>
-                </button>
-                <button className="twitter">
-                  <i className="bx bxl-twitter"></i>
-                </button>
-                <button className="linkedin">
-                  <i className="bx bxl-linkedin"></i>
-                </button>
-              </div>
               <div className="auth__content__bottom__register">
                 <div className="login__content__bottom__register__text">
                   Don't have an account?
