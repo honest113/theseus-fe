@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { LOCAL_STORAGE_TOKEN_NAME } from '../../../constants/constants'
 import setAuthToken from '../../../utils/setAuthToken';
-
 export const AuthSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -17,16 +16,13 @@ export const AuthSlice = createSlice({
         state.isAuthenticated = true
       }
     },
-    login: (state) => {
+    login: (state, action) => {
       try {
-        localStorage.setItem(
-          LOCAL_STORAGE_TOKEN_NAME,
-          "access_token"
-        );
-        state.isAuthenticated = true;
-        state.isLoading = true
+        if(action.payload.success) {
+          localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, action.payload.data.accessToken)
+          state.isAuthenticated = true;
+        }       
       } catch (error) {
-        console.log(error);
       }
     },
     logout: (state) => {

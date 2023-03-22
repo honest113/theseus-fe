@@ -1,0 +1,41 @@
+@use '../../../scss/abstracts/' as *;
+
+.or {
+  @include flex(center, center);
+  margin-top: 3rem;
+  width: 100%;
+  border-top: 1px solid $loginPageBg;
+
+  & > span {
+    position: relative;
+    top: -12px;
+    background-color: $white;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    color: $loginPageBg;
+  }
+}
+
+.bottom {
+  &__register {
+    @include flex(center, center);
+    margin-top: 2rem;
+    font-size: 0.9rem;
+
+    @include minScreen {
+      flex-direction: column;
+    }
+
+    &__link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: $loginPageBg;
+      cursor: pointer;
+      margin-left: 5px;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
