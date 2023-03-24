@@ -1,0 +1,14 @@
+@use "../../../scss/abstracts/" as *;
+
+.dashboard-page {
+  padding: 2rem 3rem;
+
+  &__top {
+    margin-bottom: 2rem;
+    @include flex(center, space-between);
+
+    & > button {
+      cursor: pointer;
+    }
+  }
+}

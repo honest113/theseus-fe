@@ -1,0 +1,120 @@
+@use '../../scss/abstracts/' as *;
+
+.sidebar {
+    position: fixed;
+    width: $sidebarWidth;
+    height: calc(100vh - $topNavHeight);
+    margin-top: $topNavHeight;
+    transition: all 0.2s ease;
+    z-index: 50;
+    background: $themeBlueGradient;
+    color: white;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        opacity: 0.1;
+        background-image: url(../../assets/imgs/sidebar-bg.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: repeat;
+    }
+
+    &.hide {
+        width: $sidebarHideWidth;
+        transition: all 0.2s ease;
+
+        .sidebar__user__name,
+        .sidebar-nav-item__tab__content__text {
+            display: none;
+        }
+
+        .main__text {
+            width: 25px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:hover {
+            width: $sidebarWidth;
+            transition: all 0.2s ease;
+
+            .sidebar__user__name,
+            .sidebar-nav-item__tab__content__text {
+                display: block;
+            }
+
+            .main__text {
+                width: $sidebarWidth;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    @include tablet {
+        left: calc(0rem - $sidebarWidth);
+
+        &.hide {
+            left: 0;
+            width: $sidebarWidth;
+            transition: all 0.2s ease;
+
+            .sidebar__user__name,
+            .sidebar-nav-item__tab__content__text {
+                display: block;
+            }
+        }
+    }
+
+    &__user {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding-left: 1.3rem;
+        @include flex(center, flex-start);
+
+        & > img {
+            --size: 30px;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+        }
+
+        &__name {
+            margin-left: 1rem;
+            font-size: smaller;
+            opacity: 1;
+            width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    & > hr {
+        opacity: 0.1;
+    }
+
+    &__menu {
+        position: relative;
+        height: calc(100% - $topNavHeight);
+        width: 100%;
+        overflow-y: scroll !important;
+        overflow-anchor: none;
+        padding-left: 1.3rem;
+        padding-bottom: 2rem;
+
+        
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}

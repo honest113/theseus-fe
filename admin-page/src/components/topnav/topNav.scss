@@ -1,0 +1,141 @@
+@use '../../scss/abstracts/' as *;
+
+.topNav {
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    height: $topNavHeight;
+    @include flex(center, space-between);
+    transition: all 0.2s ease;
+    background: $themeBlueGradient;
+    color: white;
+
+    &.hide {
+        .topNav__logo {
+            min-width: $sidebarHideWidth;
+            transition: all 0.2s ease;
+
+            &__text {
+                display: none;
+            }
+        }
+
+        .topNav__content {
+            min-width: calc(100% - $sidebarHideWidth);
+            transition: all 0.2s ease;
+        }
+    }
+
+    @include tablet {
+        .topNav__logo {
+            min-width: $sidebarHideWidth;
+            transition: all 0.2s ease;
+
+            &__text {
+                display: none;
+            }
+        }
+
+        .topNav__content {
+            min-width: calc(100% - $sidebarHideWidth);
+            transition: all 0.2s ease;
+        }
+    }
+
+    &__logo {
+        cursor: pointer;
+        min-width: $sidebarWidth;
+        padding-left: 1.3rem;
+        @include flex(center, flex-start);
+
+        &__text {
+            font-size: x-large;
+            font-weight: 700;
+            padding-left: 0.5rem;
+        }
+    }
+
+    &__content {
+        overflow-x: hidden;
+        min-width: calc(100% - $sidebarWidth);
+        @include flex(center, space-between);
+
+        &__left,
+        &__right {
+            @include flex(center, center);
+            padding-left: 1rem;
+            padding-right: 1.5rem;
+        }
+
+        &__left {
+            * ~ * {
+                padding-left: 1rem;
+            }
+
+            &__btn-toggle {
+                @include flex(center, center);
+                cursor: pointer;
+
+                & > i {
+                    font-size: 1.2rem;
+
+                    @include tablet {
+                        font-size: 1rem;
+                    }
+
+                    @include mobile {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+
+            &__about {
+                font-size: 0.85rem;
+                font-weight: 400;
+                cursor: pointer;
+
+                @include mobile {
+                    display: none;
+                }
+            }
+        }
+
+        &__right {
+            * ~ * {
+                padding-left: 2rem;
+            }
+
+            &__chat,
+            &__envelope {
+                @include flex(center, center);
+                font-size: 1.1rem;
+                font-weight: 100;
+                cursor: pointer;
+
+                @include tablet {
+                    font-size: 1rem;
+                }
+
+                @include mobile {
+                    font-size: 1.5rem;
+                }
+            }
+
+            &__user {
+                @include flex(center, center);
+                cursor: pointer;
+
+                & > img {
+                    --size: 30px;
+                    width: var(--size);
+                    height: var(--size);
+                    border-radius: 50%;
+                }
+
+                @include mobile {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,90 @@
+@use '../../scss/abstracts/' as *;
+
+.sidebar-nav-item {
+    .main__text {
+        font-size: x-small;
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        margin-top: 3rem;
+    }
+
+    &__tab {
+        @include flex(center, space-between);
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+        opacity: 0.7;
+        width: 100%;
+
+        &__content {
+            @include flex(center, flex-start);
+            &__icon {
+                font-size: 1.3rem;
+                font-weight: 400;
+            }
+
+            &__text {
+                margin-left: 1rem;
+                font-size: small;
+            }
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        // &__children {
+        //     @include flex(center, center);
+        //     margin-right: 1rem;
+
+        //     &__number {
+        //         font-size: 0.7rem;
+        //         font-weight: 300;
+        //         border-radius: 5px;
+        //         background-color: $oceanColor;
+        //         padding: 0 0.4rem;
+        //     }
+
+        //     & > i {
+        //         font-size: 1.3rem;
+        //         margin-left: 0.5rem;
+        //         transition: all 0.3s ease;
+        //     }
+        // }
+
+        &.active {
+            opacity: 1;
+        }
+
+        // &.active &__children {
+        //     & > i {
+        //         transform: rotate(90deg);
+        //         transition: all 0.3s ease;
+        //     }
+        // }
+    }
+
+    // &__sub {
+    //     @include flex(flex-start, center);
+    //     flex-direction: column;
+    //     margin-left: 2.5rem;
+    //     max-height: 0;
+    //     overflow: hidden;
+    //     transition: all 0.3s ease;
+
+    //     &__tab {
+    //         margin: 0.5rem 0;
+    //         font-size: 0.9rem;
+    //         opacity: 0.7;
+    //     }
+
+    //     &.show {
+    //         & > i {
+    //             transform: rotate(90deg);
+    //             transition: all 0.3s ease;
+    //         }
+    //         max-height: 7rem;
+    //         transition: all 0.3s ease;
+    //     }
+    // }
+}

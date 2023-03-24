@@ -1,0 +1,57 @@
+@use "../../scss/abstracts/" as *;
+
+.layout {
+  .main {
+    padding-left: $sidebarWidth;
+    padding-top: $topNavHeight;
+    overflow-x: hidden;
+
+    &__content {
+      min-height: 100vh;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &.hide {
+      padding-left: $sidebarHideWidth;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @include tablet {
+      padding-left: 0;
+
+      &.hide {
+        padding-left: 0;
+        transition: all 0.3s ease-in-out;
+
+        .overlay {
+          background-color: $overlay;
+          position: fixed;
+          top: $topNavHeight;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          z-index: 1;
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+  // Setting color for top nav
+  &.top_nav-color {
+    & > .topNav {
+      background: $themeBlueGradient;
+      color: $white;
+
+      .topNav__logo__text {
+        color: white;
+      }
+
+      #fill1OfLogo {
+        fill: white;
+      }
+      #fill2OfLogo {
+        fill: white;
+      }
+    }
+  }
+}
