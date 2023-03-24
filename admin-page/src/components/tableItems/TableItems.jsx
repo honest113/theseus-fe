@@ -1,65 +1,122 @@
-import React from "react";
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import styled from "@emotion/styled";
+import { adminRetrieveListCompany } from "../../apis/company/companyApi";
+import { Button } from "@mui/material";
+import { makeStyles } from '@mui/styles';
+import { loadListCompany } from "../../redux/slices/company/CompanySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: "name", label: "Company Name", minWidth: 100 },
+  { id: "phoneNumber", label: "Phone Number", minWidth: 80, align: "center" },
   {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    id: "manageCatalogue",
+    label: "Manage Catalogue",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US")
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    id: "status",
+    label: "Status",
+    minWidth: 80,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US")
   },
   {
-    id: 'density',
-    label: 'Density',
+    id: "address",
+    label: "Address",
     minWidth: 170,
-    align: 'right',
-    format: (value) => value.toFixed(2),
+    align: "center",
+    format: (value) => value.toFixed(2)
   },
+  {
+    id: "description",
+    label: "Description",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toFixed(2)
+  },
+  {
+    id: "detail",
+    label: "Detail",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toFixed(2)
+  }
 ];
 
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "gray",
+    color: "white"
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14
+  }
+}));
+
+function createData(
+  name = "",
+  phoneNumber = "",
+  manageCatalogue = "",
+  status = "ACTIVE",
+  address = "",
+  description = "",
+  detail = ""
+) {
+  return {
+    name,
+    phoneNumber,
+    manageCatalogue,
+    status,
+    address,
+    description,
+    detail
+  };
 }
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
+const createRowData = (data) => {
+  const rows = data.map((item) =>
+    createData(
+      item.name,
+      item.phoneNumber,
+      item.manageCatalogue,
+      item.status,
+      item.address,
+      item.description,
+      item.detail
+    )
+  );
+  return rows;
+};
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    "& .MuiTableCell-root": {
+      borderLeft: "1px solid rgba(224, 224, 224, 1)"
+    }
+  }
+});
 
 const TableItems = () => {
-  const [page, setPage] = React.useState(0);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  const listCompany = useSelector((state) => state.company.listCompany);
+
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setRows] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -70,21 +127,36 @@ const TableItems = () => {
     setPage(0);
   };
 
+  const getListCompany = async () => {
+    const res = await adminRetrieveListCompany();
+    if (res.data.success) {
+      dispatch(loadListCompany(res.data.data));
+    }
+  };
+
+  useEffect(() => {
+    getListCompany();
+  }, []);
+
+  useEffect(() => {
+    setRows(createRowData(listCompany));
+  }, [listCompany])
+
   return (
     <div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+          <Table className={classes.table} stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
-                  <TableCell
+                  <StyledTableCell
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
-                  </TableCell>
+                  </StyledTableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -101,13 +173,34 @@ const TableItems = () => {
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
+                        if (column.id === "detail") {
+                          return (
+                            <StyledTableCell
+                              key={column.id}
+                              align={column.align}
+                            >
+                              <Button
+                                align={column.align}
+                                variant="outlined"
+                                size="small"
+                                color="info"
+                              >
+                                Detail
+                              </Button>
+                            </StyledTableCell>
+                          );
+                        } else {
+                          return (
+                            <StyledTableCell
+                              key={column.id}
+                              align={column.align}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </StyledTableCell>
+                          );
+                        }
                       })}
                     </TableRow>
                   );
