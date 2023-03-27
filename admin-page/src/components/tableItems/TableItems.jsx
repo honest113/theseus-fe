@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { loadListCompany } from "../../redux/slices/company/CompanySlice";
 import { useDispatch, useSelector } from "react-redux";
+import CompanyDetail from "../company-detail/CompanyDetail";
 
 const columns = [
   { id: "name", label: "Company Name", minWidth: 100 },
@@ -71,7 +72,8 @@ function createData(
   status = "ACTIVE",
   address = "",
   description = "",
-  action = ""
+  action = "",
+  companyId= ""
 ) {
   return {
     name,
@@ -80,7 +82,8 @@ function createData(
     status,
     address,
     description,
-    action
+    action,
+    companyId
   };
 }
 
@@ -93,7 +96,8 @@ const createRowData = (data) => {
       item.status,
       item.address,
       item.description,
-      item.action
+      item.action,
+      item.companyId
     )
   );
   return rows;
@@ -117,9 +121,21 @@ const TableItems = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState([]);
+  const [currCompany, setCurrCompany] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const [openDialogDetailCompany, setOpenDialogDetailCompany] = useState(false);
+
+  const handleClickOpenDialog = (company) => {
+    setOpenDialogDetailCompany(true);
+    setCurrCompany(company)
+  };
+
+  const handleClose = () => {
+    setOpenDialogDetailCompany(false);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -188,6 +204,7 @@ const TableItems = () => {
                                 variant="outlined"
                                 size="small"
                                 color="info"
+                                onClick={() => handleClickOpenDialog(row)}
                               >
                                 Detail
                               </Button>
@@ -228,6 +245,11 @@ const TableItems = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+        <CompanyDetail
+          open={openDialogDetailCompany}
+          handleClose={handleClose}
+          company={currCompany}
         />
       </Paper>
     </div>

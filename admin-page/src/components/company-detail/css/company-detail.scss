@@ -1,0 +1,50 @@
+@use "../../../scss/abstracts/" as *;
+
+.company-detail-dialog {
+  .toggle-change {
+    @include flex(center, center);
+
+    .toggle-option-active {
+      font-weight: bold;
+    }
+
+    .toggle-checkbox {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      -webkit-appearance: none;
+      background: #c6c6c6;
+      outline: none;
+      border-radius: 20px;
+      transition: 0.7s;
+      margin: 0 18px;
+    }
+
+    .toggle-checkbox:checked {
+      background: #0066ff;
+    }
+
+    .toggle-checkbox:before {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 20px;
+      top: 2px;
+      left: 4px;
+      background: #ffffff;
+      transform: scale(1.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: 0.5s;
+    }
+
+    .toggle-checkbox:checked:before {
+      left: 20px;
+    }
+  }
+
+  .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    min-width: 80%;
+    max-width: 1600px;
+  }
+}

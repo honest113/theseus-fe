@@ -18,7 +18,7 @@ const SidebarNavItem = ({ item }) => {
                 <Link
                     className={`sidebar-nav-item__tab ${
                         nav.link === activeTab ? 'active' : ''
-                    } ${nav.childNav.length !== 0 ? 'main-tab' : ''}`}
+                    } ${nav.childNav?.length !== 0 ? 'main-tab' : ''}`}
                     key={index}
                     to={nav.link}
                 >

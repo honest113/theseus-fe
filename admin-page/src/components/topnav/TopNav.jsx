@@ -29,7 +29,7 @@ const TopNav = () => {
   return (
     <div className="topNav">
       <Link to="/" className="topNav__logo">
-        <div className="topNav__logo__text active">These Us</div>
+        <div className="topNav__logo__text active">Theseus</div>
       </Link>
       <div className="topNav__content">
         <div className="topNav__content__left">
