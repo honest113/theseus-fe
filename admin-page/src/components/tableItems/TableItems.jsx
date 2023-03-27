@@ -161,7 +161,7 @@ const TableItems = () => {
   return (
     <div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: 700 }}>
           <Table
             className={classes.table}
             stickyHeader

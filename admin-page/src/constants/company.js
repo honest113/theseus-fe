@@ -11,8 +11,8 @@ export const manageCatalogues = [
 
 export const companyStatus = [
   {
-    service: "APPROVE",
-    text: "APPROVE"
+    service: "APPROVAL",
+    text: "APPROVAL"
   },
   {
     service: "PENDING",

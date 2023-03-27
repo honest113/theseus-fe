@@ -13,31 +13,17 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
-import { adminRetrieveListMerchant } from "../../../apis/merchant/merchantApi";
+import { adminRetrieveListCompanyAccount } from "../../../apis/company-account/companyAccountApi";
 
 const columns = [
-  { id: "name", label: "Company Name", minWidth: 100 },
-  { id: "phoneNumber", label: "Phone Number", minWidth: 80, align: "center" },
+  { id: "userName", label: "User name", minWidth: 100 },
+  { id: "email", label: "Email", minWidth: 80, align: "center" },
   {
     id: "status",
     label: "Status",
     minWidth: 80,
     align: "center",
     format: (value) => value.toLocaleString("en-US")
-  },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toFixed(2)
-  },
-  {
-    id: "description",
-    label: "Description",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toFixed(2)
   },
   {
     id: "action",
@@ -58,34 +44,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }
 }));
 
-function createData(
-  name = "",
-  phoneNumber = "",
-  status = "ACTIVE",
-  address = "",
-  description = "",
-  action = ""
-) {
+function createData(userName = "", email = "", status = "") {
   return {
-    name,
-    phoneNumber,
-    status,
-    address,
-    description,
-    action
+    userName,
+    email,
+    status
   };
 }
 
 const createRowData = (data) => {
   const rows = data.map((item) =>
-    createData(
-      item.name,
-      item.phoneNumber,
-      item.status,
-      item.address,
-      item.description,
-      item.action
-    )
+    createData(item.userName, item.email, item.status)
   );
   return rows;
 };
@@ -99,13 +68,13 @@ const useStyles = makeStyles({
   }
 });
 
-const CompanyMerchantTable = ({ company }) => {
+const CompanyAccountTable = ({ company }) => {
   const classes = useStyles();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
-  const [listMerchant, setListMerchant] = useState([]);
+  const [companyAccount, setListCompanyAccount] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -116,18 +85,19 @@ const CompanyMerchantTable = ({ company }) => {
     setPage(0);
   };
 
-  const getListMerchant = async () => {
-    setListMerchant([]);
+  const getListCompanyAccount = async () => {
+    setListCompanyAccount([]);
     const res =
-      company.companyId && (await adminRetrieveListMerchant(company.companyId));
+      company.companyId &&
+      (await adminRetrieveListCompanyAccount(company.companyId));
     if (res.data.success) {
-      setListMerchant(res.data.data);
+      setListCompanyAccount(res.data.data);
       setRows(createRowData(res.data.data));
     }
   };
 
   useEffect(() => {
-    getListMerchant();
+    getListCompanyAccount();
   }, [company.companyId]);
 
   return (
@@ -205,4 +175,4 @@ const CompanyMerchantTable = ({ company }) => {
   );
 };
 
-export default CompanyMerchantTable;
+export default CompanyAccountTable;

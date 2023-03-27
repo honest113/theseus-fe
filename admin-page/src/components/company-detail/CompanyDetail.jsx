@@ -1,5 +1,12 @@
-import { Dialog, DialogContent, DialogTitle, Slide } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slide
+} from "@mui/material";
 import React, { useState } from "react";
+import CompanyAccountTable from "./company-account/CompanyAccountTable";
 import CompanyMerchantTable from "./company-merchant/CompanyMerchantTable";
 import "./css/company-detail.scss";
 
@@ -21,26 +28,39 @@ const CompanyDetail = ({ open, handleClose, company }) => {
         className="company-detail-dialog"
       >
         <DialogTitle fontWeight="bold">{"Company Detail"}</DialogTitle>
-        <div class="toggle-change" v-show="showToggle">
-          <div
-            class={`toggle-option ${!isMerchant ? "toggle-option-active" : ""}`}
-          >
-            Company Account
-          </div>
-          <input
-            type="checkbox"
-            class="toggle-checkbox"
-            checked={isMerchant}
-            onChange={() => setIsMerchant(!isMerchant)}
-          />
-          <div
-            class={`toggle-option ${isMerchant ? "toggle-option-active" : ""}`}
-          >
-            Merchant
+        <div className="company-detail-top">
+          <Button variant="contained">
+            {isMerchant ? "Add Merchant" : "Add Company Account"}
+          </Button>
+          <div class="toggle-change" v-show="showToggle">
+            <div
+              class={`toggle-option ${
+                !isMerchant ? "toggle-option-active" : ""
+              }`}
+            >
+              Company Account
+            </div>
+            <input
+              type="checkbox"
+              class="toggle-checkbox"
+              checked={isMerchant}
+              onChange={() => setIsMerchant(!isMerchant)}
+            />
+            <div
+              class={`toggle-option ${
+                isMerchant ? "toggle-option-active" : ""
+              }`}
+            >
+              Merchant
+            </div>
           </div>
         </div>
         <DialogContent>
-          <CompanyMerchantTable company={company} />
+          {isMerchant ? (
+            <CompanyMerchantTable company={company} />
+          ) : (
+            <CompanyAccountTable company={company} />
+          )}
         </DialogContent>
       </Dialog>
     </div>
