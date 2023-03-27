@@ -6,6 +6,7 @@ import {
   Slide
 } from "@mui/material";
 import React, { useState } from "react";
+import AddCompanyAccount from "./company-account/AddCompanyAccount";
 import CompanyAccountTable from "./company-account/CompanyAccountTable";
 import CompanyMerchantTable from "./company-merchant/CompanyMerchantTable";
 import "./css/company-detail.scss";
@@ -16,6 +17,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CompanyDetail = ({ open, handleClose, company }) => {
   const [isMerchant, setIsMerchant] = useState(true);
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseAddCompanyAccount = () => {
+    setOpenDialog(false);
+  };
 
   return (
     <div>
@@ -29,9 +40,13 @@ const CompanyDetail = ({ open, handleClose, company }) => {
       >
         <DialogTitle fontWeight="bold">{"Company Detail"}</DialogTitle>
         <div className="company-detail-top">
-          <Button variant="contained">
-            {isMerchant ? "Add Merchant" : "Add Company Account"}
-          </Button>
+          <div>
+            {!isMerchant && (
+              <Button variant="contained" onClick={handleClickOpenDialog}>
+                Add Company Account
+              </Button>
+            )}
+          </div>
           <div class="toggle-change" v-show="showToggle">
             <div
               class={`toggle-option ${
@@ -63,6 +78,11 @@ const CompanyDetail = ({ open, handleClose, company }) => {
           )}
         </DialogContent>
       </Dialog>
+      <AddCompanyAccount
+        open={openDialog}
+        handleClose={handleCloseAddCompanyAccount}
+        companyId={company.companyId}
+      />
     </div>
   );
 };
