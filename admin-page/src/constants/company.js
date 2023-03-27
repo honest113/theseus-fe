@@ -1,11 +1,11 @@
 export const manageCatalogues = [
   {
     service: "company_managed",
-    text: "Company managed"
+    text: "Company"
   },
   {
     service: "merchant_managed",
-    text: "Merchant managed"
+    text: "Merchant"
   }
 ]
 

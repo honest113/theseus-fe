@@ -1,0 +1,108 @@
+@use "../../scss/abstracts/" as *;
+
+.box-user {
+  width: 17.5rem;
+  position: absolute;
+  top: $topNavHeight;
+  right: 1rem;
+  border-radius: 5px;
+  padding: 0;
+  transform: scale(0);
+  transform-origin: 17.5rem 0;
+  transition: all 0.3s ease;
+  background-color: bisque;
+
+  &.show {
+    transform: scale(1);
+    transition: all 0.3s ease;
+  }
+
+  &__top {
+    @include flex(center, flex-start);
+    color: $white;
+    background-color: $oceanColor;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    &__img {
+      width: 60px;
+      height: 60px;
+      margin: 18px;
+
+      & > img {
+        border-radius: 50%;
+      }
+    }
+
+    &__info {
+      padding: 0;
+      @include flex(flex-start, flex-start);
+      flex-direction: column;
+
+      &__name,
+      &__email {
+        width: 170px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &__email {
+        padding: 0;
+        font-size: 0.9rem;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__selected {
+    padding: 0;
+  }
+
+  &__setting {
+    padding: 0;
+  }
+
+  &__logout {
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+
+    & > button {
+      cursor: pointer;
+      margin-left: 2rem;
+      border: 0;
+      outline: 0;
+      background-color: $dangerColor;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      color: white;
+
+      &:hover {
+        background-color: $dangerColorHover;
+      }
+    }
+  }
+}
+
+.user-tab {
+  padding: 0;
+  @include flex(center, flex-start);
+  padding: 1rem 0 1rem 3rem;
+
+  &__icon {
+    font-size: 1.3rem;
+  }
+
+  &__text {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    transition: all 0.2s ease;
+    opacity: 0.7;
+  }
+}
+
+hr {
+  opacity: 0.2;
+}

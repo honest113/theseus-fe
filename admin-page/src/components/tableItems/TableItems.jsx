@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import styled from "@emotion/styled";
 import { adminRetrieveListCompany } from "../../apis/company/companyApi";
 import { Button } from "@mui/material";
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from "@mui/styles";
 import { loadListCompany } from "../../redux/slices/company/CompanySlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -46,9 +46,9 @@ const columns = [
     format: (value) => value.toFixed(2)
   },
   {
-    id: "detail",
-    label: "Detail",
-    minWidth: 100,
+    id: "action",
+    label: "Action",
+    minWidth: 60,
     align: "center",
     format: (value) => value.toFixed(2)
   }
@@ -71,7 +71,7 @@ function createData(
   status = "ACTIVE",
   address = "",
   description = "",
-  detail = ""
+  action = ""
 ) {
   return {
     name,
@@ -80,7 +80,7 @@ function createData(
     status,
     address,
     description,
-    detail
+    action
   };
 }
 
@@ -93,7 +93,7 @@ const createRowData = (data) => {
       item.status,
       item.address,
       item.description,
-      item.detail
+      item.action
     )
   );
   return rows;
@@ -140,13 +140,17 @@ const TableItems = () => {
 
   useEffect(() => {
     setRows(createRowData(listCompany));
-  }, [listCompany])
+  }, [listCompany]);
 
   return (
     <div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table className={classes.table} stickyHeader aria-label="sticky table">
+          <Table
+            className={classes.table}
+            stickyHeader
+            aria-label="sticky table"
+          >
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -173,7 +177,7 @@ const TableItems = () => {
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
-                        if (column.id === "detail") {
+                        if (column.id === "action") {
                           return (
                             <StyledTableCell
                               key={column.id}
@@ -186,6 +190,14 @@ const TableItems = () => {
                                 color="info"
                               >
                                 Detail
+                              </Button>
+                              <Button
+                                align={column.align}
+                                variant="outlined"
+                                size="small"
+                                color="success"
+                              >
+                                Edit
                               </Button>
                             </StyledTableCell>
                           );

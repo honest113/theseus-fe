@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./topNav.scss";
 import images from "../../assets/imgs/user1.jpg";
 import { Link } from "react-router-dom";
+import UserInfo from "../user-info/UserInfo";
 
 const TopNav = () => {
   const [sideBarStatus, setSideBarStatus] = useState(0);
@@ -46,6 +47,9 @@ const TopNav = () => {
           </div>
           <div className="topNav__content__right__user">
             <img src={images} alt="" onClick={showBoxInfo} />
+            <UserInfo
+              show={boxInfoState === true ? true : false}
+            />
           </div>
         </div>
       </div>

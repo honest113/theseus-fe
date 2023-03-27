@@ -21,6 +21,7 @@ export const AuthSlice = createSlice({
         if(action.payload.success) {
           localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, action.payload.data.accessToken)
           state.isAuthenticated = true;
+          loadUser();
         }       
       } catch (error) {
       }
