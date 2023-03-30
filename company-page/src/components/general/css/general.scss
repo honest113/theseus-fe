@@ -1,0 +1,33 @@
+@use "../../../scss/abstracts/" as *;
+
+.general-content {
+  @include flex(center, flex-start);
+  padding: 2rem;
+  padding-top: 0;
+  margin-top: 2rem;
+
+  .value {
+    margin-left: 5rem;
+  }
+}
+
+.merchant {
+  .merchant-title {
+    @include flex(center, space-between);
+    padding: 1rem 2rem;
+    background-color: #d2d2d2;
+    font-weight: bold;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+  }
+  .merchant-content {
+    .merchant-item {
+      @include flex(center, space-between);
+      padding: 0.5rem 2rem;
+
+      &.bg-gray {
+        background-color: #d2d2d2;
+      }
+    }
+  }
+}

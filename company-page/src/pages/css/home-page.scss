@@ -1,0 +1,22 @@
+@use "../../scss/abstracts/" as *;
+
+.home-page {
+  .top-bar {
+    border-bottom: 1px solid #a3a3a3;
+
+    .top-bar-content {
+      @include flex(flex-start, flex-start);
+      width: fit-content;
+      margin-bottom: 2rem;
+    
+      .active {
+        background-color: #d3d3d3;
+      }
+    }
+  }
+
+  .home-page-content {
+    padding: 2rem 10rem;
+    font-size: 14px;
+  }
+}
